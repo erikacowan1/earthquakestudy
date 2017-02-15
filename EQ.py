@@ -73,7 +73,14 @@ c = c1_name.replace("_", "\_")
 d = c2_name.replace("_", "\_")
 plot_2(c1, c2, EQ_before, EQ_after, c, d, plt_type, "2017-01-04, time(sec)" , "velocity (nm/s)", "total" + plt_type + str(EQ_before) + "\_" + str(EQ_after))
 '''
+dict_data = []
+for start, end in time_segs:
+        data = TimeSeriesDict.get([args.channel1, args.channel2], start, end, verbose=True, frametype='H1_R')
+        #print data
+        dict_data.append(data)
+print dict_data[0][args.channel1]
 
+'''
 #plotting before, during, after the EQ       
 for start, end in time_segs:
     
@@ -95,13 +102,11 @@ for start, end in time_segs:
     #plotting TimeSeries CM, DM
     plt_type = 'CM\_DM\_TimeSeries'
     plot_2(common_mode(c1, c2),differential_mode(c1, c2), start, end, "CM", "DM", plt_type + " CM\_DM", "2017-01-04, time(sec)","velocity (nm/s)", "CM_DM_TimeSeries_" + str(start) + "_" + str(end))
-    '''
     #plotting AVG_FFT CM, DM 
     plt_type = 'AVG\_FFT'
     fft_p1 = common_mode(c1, c2).average_fft(500, 50, window='hamming')
     fft_p2 = differential_mode(c1, c2).average_fft(500, 50, window='hamming')
     plot_2(fft_p1, fft_p2, start, end, "CM", "DM", plt_type + " CM\_DM", "2017-01-04, time(sec)", "velocity (nm/s)", "AVG_FFT_CM_DM" + str(start) + "_" + str(end))
-    '''
 
     #plotting BLRMS
     plt_type = 'BLRMS'
@@ -115,3 +120,4 @@ for start, end in time_segs:
     asd1 = common_mode(c1, c2).asd(4,2)
     asd2 = differential_mode(c1, c2).asd(4,2)
     plot_2(asd1, asd2, start, end, "CM", "DM", plt_type + " CM\_DM", "2017-01-04, frequency(Hz)", "ASD velocity [1/$\sqrt{\mathrm{Hz}}$]", plt_type + "_CM_DM" + str(start) + "_" + str(end))
+'''
